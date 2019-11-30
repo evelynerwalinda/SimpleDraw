@@ -41,7 +41,7 @@ public class SelectionTool
             if (mySelectedGroup == null) {
                 mySelectedGroup = new ShapeGroup();
                 myPanel.l.setForeground(Color.red);
-                System.out.println("touche g appuyée");
+                //System.out.println("touche g appuyée");
             }
         }
         if (e.getKeyChar() == 'u' || e.getKeyChar() == 'U') {
@@ -50,7 +50,7 @@ public class SelectionTool
                 mySelectedGroup = null;
                 myPanel.l.setForeground(Color.black);
                 myPanel.repaint();
-                System.out.println("touche u appuyée");
+                //System.out.println("touche u appuyée");
             }
 
         }
@@ -62,9 +62,11 @@ public class SelectionTool
 
         if (mySelectedGroup != null) {
             if (pickedShape != null) {
-                mySelectedGroup.addShape(pickedShape);
-                System.out.println("forme ajoutée au groupe");
-                mySelectedGroup.setSelected(true);
+                if (!mySelectedGroup.group.contains(pickedShape)) {
+                    mySelectedGroup.addShape(pickedShape);
+                    //System.out.println("forme ajoutée au groupe");
+                    mySelectedGroup.setSelected(true);
+                }
             }
         } else if (mySelectedShape != null) {
             mySelectedShape.setSelected(false);

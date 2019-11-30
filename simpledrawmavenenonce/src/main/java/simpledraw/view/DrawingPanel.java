@@ -33,7 +33,7 @@ public class DrawingPanel
         setBackground(java.awt.Color.white);
         myCurrentTool = new SelectionTool(this);
         activate(myCurrentTool);
-        l.setText("press g to group");
+        l.setText("press g to group, u to ungroup");
         add(l);
     }
 
@@ -67,8 +67,9 @@ public class DrawingPanel
         g2.setRenderingHints(qualityHints);
         //myDrawing.draw(g2);
         for (Shape s : myDrawing.myShapes) {
-            s.accept(new ShapeDraw(), g2);
+            s.accept(new ShapeDraw(), g2);            
         }
+        
         myCurrentTool.draw(g2);
     }
 

@@ -11,6 +11,7 @@ import java.util.*;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import simpledraw.view.ShapePrint;
 
 public class Drawing {
 	/**
@@ -36,6 +37,7 @@ public class Drawing {
 	 **/
 	public void addShape(Shape s) {
 		myShapes.add(s);
+                s.accept(new ShapePrint(), null);
 	}
 
 	/**
