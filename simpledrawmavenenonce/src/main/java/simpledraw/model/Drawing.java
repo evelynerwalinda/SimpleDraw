@@ -11,6 +11,7 @@ import java.util.*;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import simpledraw.view.DrawingView;
 import simpledraw.view.ShapePrint;
 
 public class Drawing {
@@ -18,6 +19,8 @@ public class Drawing {
 	 * A drawing is a collection of shapes
 	 */
 	public List<Shape> myShapes = new LinkedList<Shape>();
+        private Set<DrawingView> myViews = new java.util.HashSet<DrawingView> ();
+
 
 	public Drawing() {
 	}
@@ -38,6 +41,7 @@ public class Drawing {
 	public void addShape(Shape s) {
 		myShapes.add(s);
                 s.accept(new ShapePrint(), null);
+                notifyViews();
 	}
 
 	/**
@@ -46,6 +50,7 @@ public class Drawing {
 	 **/
 	public void deleteShape(Shape s) {
 		myShapes.remove(s);
+                notifyViews();
 	}
 
 	/**
@@ -74,4 +79,19 @@ public class Drawing {
         public List<Shape> getShapes(){
             return myShapes;
         }
+        
+        public void addView(DrawingView l){
+            myViews.add(l);
+            l.notify(this);
+        }
+        
+        public void removeView(DrawingView l){
+            myViews.remove(l);
+        }
+        
+        protected void notifyViews() {
+		if (null != myViews) 
+			for (DrawingView view : myViews) 
+				view.notify(this);
+	}
 }

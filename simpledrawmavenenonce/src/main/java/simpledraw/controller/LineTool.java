@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import simpledraw.model.Line;
+import simpledraw.view.ToolVisitor;
 
 /**
  * The tool to create Lines
@@ -18,9 +19,9 @@ import simpledraw.model.Line;
 
 public class LineTool
 	extends DrawingTool {
-	private boolean iAmActive = false;
-	private Point myInitialPoint;
-	private Point myFinalPoint;
+	public boolean iAmActive = false;
+	public Point myInitialPoint;
+	public Point myFinalPoint;
 
 	public LineTool(DrawingPanel panel) {
 		super(panel);
@@ -35,7 +36,8 @@ public class LineTool
 			myFinalPoint = myInitialPoint;
 			myPanel.setCursor(Cursor.getPredefinedCursor(Cursor.
 				MOVE_CURSOR));
-			myPanel.repaint();
+                        myPanel.notify(myDrawing);
+			//myPanel.repaint();
 		} else {
 			// Second point
 			iAmActive = false;
@@ -43,7 +45,8 @@ public class LineTool
 				new Line(myInitialPoint, myFinalPoint)
 				);
 			myPanel.setCursor(Cursor.getDefaultCursor());
-			myPanel.repaint();
+                        myPanel.notify(myDrawing);
+			//myPanel.repaint();
 		}
 	}
 
@@ -51,7 +54,8 @@ public class LineTool
 	public void mouseDragged(MouseEvent e) {
 		if (iAmActive) {
 			myFinalPoint = e.getPoint();
-			myPanel.repaint();
+                        myPanel.notify(myDrawing);
+			//myPanel.repaint();
 		}
 	}
 
@@ -60,7 +64,7 @@ public class LineTool
             mouseDragged(e);
         }
         
-        @Override
+        /*@Override
 	public void draw(Graphics2D g) {
 		if (iAmActive) {
 			g.setColor(Color.red);
@@ -71,5 +75,10 @@ public class LineTool
 				myFinalPoint.y
 				);
 		}
-	}
+	}*/
+        
+        @Override
+        public void accept(ToolVisitor v, Graphics2D g){
+            v.visit(this, g);
+        }
 }

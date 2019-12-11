@@ -4,6 +4,8 @@ import simpledraw.model.Shape;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.Set;
+import simpledraw.view.DrawingView;
 import simpledraw.view.ShapeVisitor;
 
 /**
@@ -14,7 +16,7 @@ public class Circle
 	extends Shape {
 	public Point myCenter;
 	public int myRadius;
-
+        
 	/**
 	 * Construct a Circle
 	 * @param center        The center of the circle
@@ -50,5 +52,6 @@ public class Circle
 
 	public boolean isPickedBy(Point p) {
 		return (Math.abs(myCenter.distance(p) - myRadius) <= 2);
-	}        
+	}             
+                
 }

@@ -5,12 +5,12 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import simpledraw.view.DrawingPanel;
 import simpledraw.model.Shape;
 import simpledraw.model.ShapeGroup;
+import simpledraw.view.ToolVisitor;
 
 /**
  * The tool to select, move and delete Shapes in the Drawing
@@ -33,7 +33,7 @@ public class SelectionTool
         if (e.getKeyChar() == KeyEvent.VK_DELETE) {
             if (mySelectedShape != null) {
                 myDrawing.deleteShape(mySelectedShape);
-                myPanel.repaint();
+                //myPanel.repaint();
             }
         }
 
@@ -49,7 +49,7 @@ public class SelectionTool
                 mySelectedGroup.setSelected(false);
                 mySelectedGroup = null;
                 myPanel.l.setForeground(Color.black);
-                myPanel.repaint();
+                //myPanel.repaint();
                 //System.out.println("touche u appuyée");
             }
 
@@ -76,7 +76,8 @@ public class SelectionTool
             mySelectedShape.setSelected(true);
             myPanel.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
         }
-        myPanel.repaint();
+        myPanel.notify(myDrawing);
+        //myPanel.repaint();
     }
 
     public void mouseReleased(MouseEvent e) {
@@ -99,7 +100,8 @@ public class SelectionTool
                     e.getY() - myLastPoint.y
             );
             myLastPoint = e.getPoint();
-            myPanel.repaint();
+            myPanel.notify(myDrawing);
+            //myPanel.repaint();
 
         } else if (mySelectedShape != null) {
             mySelectedShape.translateBy(
@@ -107,12 +109,18 @@ public class SelectionTool
                     e.getY() - myLastPoint.y
             );
             myLastPoint = e.getPoint();
-            myPanel.repaint();
+            myPanel.notify(myDrawing);
+            //myPanel.repaint();
         }
     }
 
-    @Override
+    /*@Override
     public void draw(Graphics2D g) {
-    }
+    }*/
+    
+    @Override
+        public void accept(ToolVisitor v, Graphics2D g){
+            v.visit(this, g);
+        }
 
 }

@@ -7,6 +7,8 @@ package simpledraw.model;
  */
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.Set;
+import simpledraw.view.DrawingView;
 import simpledraw.view.ShapeVisitor;
 
 
@@ -49,5 +51,5 @@ public abstract class Shape {
 	abstract public boolean isPickedBy(Point p);
         
         public abstract void accept(ShapeVisitor v, Graphics2D g);
-        
+                
 }

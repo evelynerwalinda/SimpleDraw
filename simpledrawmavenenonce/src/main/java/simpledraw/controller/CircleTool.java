@@ -12,16 +12,18 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import simpledraw.model.Circle;
+import simpledraw.view.MiniPanel;
+import simpledraw.view.ToolVisitor;
 
 public class CircleTool
 	extends DrawingTool {
-	private boolean iAmActive = false;
-	private Point myCenter;
-	private int myRadius;
+	public boolean iAmActive = false;
+	public Point myCenter;
+	public int myRadius;        
 
 	public CircleTool(DrawingPanel panel) {
 		super(panel);
-	}
+	}      
 
         @Override
 	public void mousePressed(MouseEvent e) {
@@ -33,7 +35,8 @@ public class CircleTool
 			myPanel.setCursor(
 				Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR)
 				);
-			myPanel.repaint();
+			//myPanel.repaint(); 
+                        myPanel.notify(myDrawing);
 		} else {
 			// Radius
 			iAmActive = false;
@@ -41,7 +44,8 @@ public class CircleTool
 				new Circle(myCenter, myRadius)
 				);
 			myPanel.setCursor(Cursor.getDefaultCursor());
-			myPanel.repaint();
+			//myPanel.repaint();
+                        myPanel.notify(myDrawing);
 		}
 	}
 
@@ -51,7 +55,8 @@ public class CircleTool
 			myRadius = (int) (
 				myCenter.distance(e.getPoint())
 				);
-			myPanel.repaint();
+			//myPanel.repaint();
+                        myPanel.notify(myDrawing);
 		}
 	}
         @Override
@@ -59,7 +64,7 @@ public class CircleTool
             mouseMoved(e);
         }
 
-        @Override
+        /*@Override
 	public void draw(Graphics2D g) {
 		if (iAmActive) {
 			g.setColor(Color.red);
@@ -70,5 +75,12 @@ public class CircleTool
 				myRadius * 2
 				);
 		}
-	}
+	}*/
+
+    @Override
+    public void accept(ToolVisitor v, Graphics2D g) {
+        v.visit(this, g);
+    }
+    
+    
 }

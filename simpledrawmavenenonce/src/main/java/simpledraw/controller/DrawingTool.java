@@ -9,6 +9,8 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import simpledraw.model.*;
 import simpledraw.view.DrawingPanel;
+import simpledraw.view.MiniPanel;
+import simpledraw.view.ToolVisitor;
 
 /**
  * A Drawing tool in the drawing panel
@@ -17,18 +19,20 @@ import simpledraw.view.DrawingPanel;
 public abstract class DrawingTool
 	implements KeyListener, MouseListener, MouseMotionListener {
 	DrawingPanel myPanel;
-        Drawing myDrawing;
-
+        Drawing myDrawing;  
+        
+        MiniPanel miniPanel;
+        
 	DrawingTool(DrawingPanel panel) {
 		myPanel = panel;
                 myDrawing = panel.myDrawing;
-	}
+	}        
 
 	/**
 	 * Draws this tool in the panel
 	 * @param g the graphics context to draw into
 	 */
-	public abstract void draw(Graphics2D g);
+	//public abstract void draw(Graphics2D g);
 
 	public void keyTyped(KeyEvent e) {
 	}
@@ -60,5 +64,7 @@ public abstract class DrawingTool
 
 	public void mouseMoved(MouseEvent e) {
 	}
+        
+        public abstract void accept(ToolVisitor v, Graphics2D g);
                 
 }

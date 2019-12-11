@@ -37,13 +37,13 @@ public class DrawingPanel
         add(l);
     }
 
-    void activateSelectionTool() {
+    public void activateSelectionTool() {
         terminate(myCurrentTool);
         myCurrentTool = new SelectionTool(this);
         activate(myCurrentTool);
     }
 
-    void activateCircleTool() {
+    public void activateCircleTool() {
         terminate(myCurrentTool);
         myCurrentTool = new CircleTool(this);
         activate(myCurrentTool);
@@ -51,7 +51,7 @@ public class DrawingPanel
         repaint();
     }
 
-    void activateLineTool() {
+    public void activateLineTool() {
         terminate(myCurrentTool);
         myCurrentTool = new LineTool(this);
         activate(myCurrentTool);
@@ -70,7 +70,9 @@ public class DrawingPanel
             s.accept(new ShapeDraw(), g2);            
         }
         
-        myCurrentTool.draw(g2);
+        myCurrentTool.accept(new ToolDraw(), g2);
+        
+        //myCurrentTool.draw(g2);
     }
 
     private void terminate(DrawingTool t) {
